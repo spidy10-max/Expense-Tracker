@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Tracker - Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/style.css">
     <style>
-        /* Additional CSS for the updated design */
         :root {
             --primary-color: #4a6cf7;
             --secondary-color: #667eea;
@@ -19,14 +17,19 @@
             --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
         
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
             min-height: 100vh;
             color: #fff;
             position: relative;
             overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
+            font-family: 'Poppins', sans-serif;
         }
         
         body::before {
@@ -43,16 +46,14 @@
             z-index: -1;
         }
         
-        /* Circular Header Styles */
+        /* Mobile Header Styles */
         .header {
             background-color: rgba(0, 0, 0, 0.85);
             color: #fff;
-            padding: 0;
             position: sticky;
             top: 0;
             z-index: 1000;
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-            border-radius: 0 0 50px 50px;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
@@ -61,39 +62,61 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
             padding: 15px 20px;
         }
         
         .logo h1 {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             letter-spacing: 1px;
             color: #fff;
         }
         
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            width: 25px;
+            height: 20px;
+            justify-content: space-between;
+        }
+        
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
         .nav {
             display: flex;
             align-items: center;
-            gap: 30px;
         }
         
         .nav-list {
             display: flex;
             list-style: none;
-            gap: 25px;
+            gap: 15px;
         }
         
         .nav-link {
             color: #fff;
             text-decoration: none;
             font-weight: 500;
-            font-size: 16px;
+            font-size: 14px;
             transition: all 0.3s ease;
-            padding: 8px 15px;
+            padding: 8px 12px;
             position: relative;
             border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .nav-link i {
+            font-size: 16px;
         }
         
         .nav-link:hover {
@@ -110,12 +133,15 @@
             background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 10px 25px;
-            border-radius: 25px;
+            padding: 8px 15px;
+            border-radius: 20px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         .logout-btn:hover {
@@ -126,48 +152,35 @@
         
         /* Main Content */
         main {
-            flex: 1;
-            padding: 40px 20px;
+            padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
-            width: 100%;
         }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .dashboard-header {
+        .page-title {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
         }
         
-        .dashboard-header h2 {
-            font-size: 36px;
+        .page-title h2 {
+            font-size: 28px;
             font-weight: 700;
             margin-bottom: 10px;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
         
-        .dashboard-header p {
-            font-size: 18px;
+        .page-title p {
+            font-size: 16px;
             color: var(--text-muted);
             font-weight: 300;
         }
         
-        .user-name {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-        
-        /* Cards Section with Liquid Glass Effect */
+        /* Cards Section */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
         }
         
         .card {
@@ -176,7 +189,7 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: var(--glass-shadow);
             transition: all 0.4s ease;
             text-align: center;
@@ -195,26 +208,25 @@
         }
         
         .card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
             background: rgba(255, 255, 255, 0.15);
         }
         
         .card-icon {
-            font-size: 50px;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+            font-size: 40px;
+            margin-bottom: 15px;
         }
         
         .card-title {
-            font-size: 18px;
+            font-size: 16px;
             color: var(--text-muted);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             font-weight: 500;
         }
         
         .card-amount {
-            font-size: 36px;
+            font-size: 28px;
             font-weight: 700;
             margin-bottom: 10px;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -245,14 +257,14 @@
             color: #e74c3c;
         }
         
-        /* Action Buttons with Liquid Glass Effect */
+        /* Action Buttons */
         .actions-section {
-            margin-bottom: 50px;
+            margin-bottom: 30px;
         }
         
         .actions-section h3 {
-            font-size: 24px;
-            margin-bottom: 25px;
+            font-size: 22px;
+            margin-bottom: 20px;
             text-align: center;
             font-weight: 600;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -260,8 +272,8 @@
         
         .actions-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
         }
         
         .action-btn {
@@ -270,13 +282,13 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 15px;
-            padding: 30px 20px;
+            padding: 25px 15px;
             cursor: pointer;
             transition: all 0.4s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             box-shadow: var(--glass-shadow);
             position: relative;
             overflow: hidden;
@@ -295,7 +307,7 @@
         }
         
         .action-btn:hover {
-            transform: translateY(-8px);
+            transform: translateY(-5px);
             background: rgba(255, 255, 255, 0.15);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
             border-color: rgba(255, 255, 255, 0.3);
@@ -304,14 +316,101 @@
         }
         
         .action-icon {
-            font-size: 45px;
-            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+            font-size: 35px;
         }
         
         .action-text {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             color: #fff;
+        }
+        
+        /* Recent Transactions */
+        .transactions-section {
+            margin-bottom: 30px;
+        }
+        
+        .transactions-section h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .transactions-list {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--glass-shadow);
+            min-height: 200px;
+        }
+        
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+        
+        .transaction-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        
+        .transaction-details h4 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .transaction-details p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        
+        .transaction-amount {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .income {
+            color: #2ecc71;
+        }
+        
+        .expense {
+            color: #e74c3c;
+        }
+        
+        .no-transactions {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+        }
+        
+        .no-transactions-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            opacity: 0.7;
         }
         
         /* Footer Styles */
@@ -320,10 +419,9 @@
             color: #fff;
             padding: 20px 0;
             text-align: center;
-            border-radius: 50px 50px 0 0;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            margin-top: auto;
+            margin-top: 30px;
         }
         
         .footer-content {
@@ -334,7 +432,7 @@
         
         .footer p {
             margin: 0;
-            font-size: 16px;
+            font-size: 14px;
             color: var(--text-muted);
         }
         
@@ -343,113 +441,160 @@
             font-weight: 600;
         }
         
-        /* Responsive Design */
+        /* Mobile Responsive Styles */
         @media (max-width: 768px) {
-            .nav-wrapper {
-                flex-direction: column;
-                gap: 20px;
-                padding: 15px;
-            }
-            
-            .nav {
-                flex-direction: column;
-                gap: 15px;
-                width: 100%;
+            .hamburger {
+                display: flex;
             }
             
             .nav-list {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                padding: 20px;
+                gap: 10px;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.3s ease;
+                z-index: 999;
+                border-radius: 0 0 20px 20px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            }
+            
+            .nav-list.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            .nav-link {
+                padding: 12px 15px;
+                border-radius: 10px;
+                font-size: 16px;
+                justify-content: flex-start;
             }
             
             .logout-btn {
-                width: 100%;
                 margin-top: 10px;
-            }
-            
-            .dashboard-header h2 {
-                font-size: 28px;
+                width: 100%;
+                justify-content: center;
+                padding: 12px;
             }
             
             .cards-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 15px;
             }
             
             .actions-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 15px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .action-btn {
+                padding: 20px 15px;
+            }
+            
+            .page-title h2 {
+                font-size: 24px;
             }
         }
         
         @media (max-width: 480px) {
             main {
-                padding: 30px 15px;
+                padding: 15px;
             }
             
-            .card {
-                padding: 25px 20px;
+            .nav-wrapper {
+                padding: 12px 15px;
             }
             
-            .action-btn {
-                padding: 25px 15px;
+            .logo h1 {
+                font-size: 18px;
+            }
+            
+            .page-title h2 {
+                font-size: 22px;
+            }
+            
+            .page-title p {
+                font-size: 14px;
+            }
+            
+            .card-amount {
+                font-size: 24px;
+            }
+            
+            .action-text {
+                font-size: 15px;
             }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Circular Header Section -->
+    <!-- Mobile Header Section -->
     <header class="header">
         <div class="nav-wrapper">
             <div class="logo">
                 <h1>EXPENSE TRACKER</h1>
             </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             <nav class="nav">
-                <ul class="nav-list">
-                    <li><a href="dashboard.html" class="nav-link active">Dashboard</a></li>
-                    <li><a href="add-expense.html" class="nav-link">Add Expense</a></li>
-                    <li><a href="add-income.html" class="nav-link">Add Income</a></li>
-                    <li><a href="history.html" class="nav-link">History</a></li>
-                    <li><a href="#" class="nav-link">Profile</a></li>
+                <ul class="nav-list" id="navList">
+                    <li><a href="dashboard.html" class="nav-link active"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="add-expense.html" class="nav-link"><i class="fas fa-minus-circle"></i> Add Expense</a></li>
+                    <li><a href="add-income.html" class="nav-link"><i class="fas fa-plus-circle"></i> Add Income</a></li>
+                    <li><a href="history.html" class="nav-link"><i class="fas fa-history"></i> History</a></li>
+                    <li><a href="#" class="nav-link"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button></li>
                 </ul>
-                <button class="logout-btn" id="logoutBtn">Logout</button>
             </nav>
         </div>
     </header>
 
     <!-- Main Content -->
     <main>
-        <div class="dashboard-header">
-            <h2>Welcome back, <span class="user-name">User</span>!</h2>
+        <div class="page-title">
+            <h2>Welcome back, <span id="userName" style="color: var(--primary-color);">User</span>!</h2>
             <p>Track your income and expenses with precision</p>
         </div>
 
-        <!-- Cards Section with Liquid Glass Effect -->
+        <!-- Cards Section -->
         <div class="cards-grid">
             <div class="card income-card">
                 <div class="card-icon">💰</div>
                 <h3 class="card-title">Total Income</h3>
                 <div class="card-amount" id="totalIncome">$0.00</div>
-                <div class="card-change positive">Track all your earnings</div>
+                <div class="card-change positive" id="incomeChange">Track all your earnings</div>
             </div>
 
             <div class="card expense-card">
                 <div class="card-icon">💸</div>
                 <h3 class="card-title">Total Expense</h3>
                 <div class="card-amount" id="totalExpense">$0.00</div>
-                <div class="card-change negative">Monitor your spending</div>
+                <div class="card-change negative" id="expenseChange">Monitor your spending</div>
             </div>
 
             <div class="card balance-card">
                 <div class="card-icon">💳</div>
                 <h3 class="card-title">Current Balance</h3>
                 <div class="card-amount" id="currentBalance">$0.00</div>
-                <div class="card-change positive">Your financial health</div>
+                <div class="card-change positive" id="balanceStatus">Your financial health</div>
             </div>
         </div>
 
-        <!-- Action Buttons with Liquid Glass Effect -->
+        <!-- Action Buttons -->
         <div class="actions-section">
             <h3>Quick Actions</h3>
             <div class="actions-grid">
@@ -469,6 +614,19 @@
                 </a>
             </div>
         </div>
+
+        <!-- Recent Transactions -->
+        <div class="transactions-section">
+            <h3>Recent Transactions</h3>
+            <div class="transactions-list" id="transactionsList">
+                <!-- Transactions will be populated dynamically -->
+                <div class="no-transactions">
+                    <div class="no-transactions-icon">📊</div>
+                    <p>No transactions yet</p>
+                    <p style="font-size: 14px; margin-top: 10px;">Add your first income or expense to get started!</p>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- Footer Section -->
@@ -478,38 +636,36 @@
         </div>
     </footer>
 
-    <script src="app.js"></script>
     <script>
-        // Enhanced JavaScript for UI interactivity
-        document.addEventListener('DOMContentLoaded', function() {
-            // Update user name from session if available
-            const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-            if (currentUser && currentUser.name) {
-                document.querySelector('.user-name').textContent = currentUser.name;
+        // Mobile navigation toggle
+        document.getElementById('hamburger').addEventListener('click', function() {
+            document.getElementById('navList').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navList = document.getElementById('navList');
+            const hamburger = document.getElementById('hamburger');
+            
+            if (!navList.contains(event.target) && !hamburger.contains(event.target)) {
+                navList.classList.remove('active');
+                hamburger.classList.remove('active');
             }
-            
-            // Update dashboard cards with actual data if available
-            updateDashboardCards();
-            
-            // Add smooth scroll behavior for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
-            
-            // Logout functionality
-            document.getElementById('logoutBtn').addEventListener('click', function() {
-                if (confirm('Are you sure you want to logout?')) {
-                    sessionStorage.removeItem('currentUser');
-                    window.location.href = 'login.html';
-                }
-            });
-            
-            // Add subtle animation to cards on load
+        });
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to logout?')) {
+                // Clear session storage
+                sessionStorage.removeItem('currentUser');
+                // Redirect to login page
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Add animation to cards on page load
+        document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.card');
             cards.forEach((card, index) => {
                 card.style.opacity = '0';
@@ -521,18 +677,32 @@
                     card.style.transform = 'translateY(0)';
                 }, index * 150);
             });
+            
+            // Load user data and transactions
+            loadDashboardData();
         });
-        
-        // Function to update dashboard cards with actual data
-        function updateDashboardCards() {
-            // Get transactions from localStorage
-            const transactions = JSON.parse(localStorage.getItem('expenseTrackerTransactions')) || [];
+
+        // Function to load and display dashboard data
+        function loadDashboardData() {
+            // Get current user from session storage
             const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
             
-            if (!currentUser) return;
+            // Update user name if available
+            if (currentUser && currentUser.name) {
+                document.getElementById('userName').textContent = currentUser.name;
+            }
             
-            // Filter transactions for current user
-            const userTransactions = transactions.filter(t => t.userId === currentUser.id);
+            // Get transactions from localStorage
+            const transactions = JSON.parse(localStorage.getItem('expenseTrackerTransactions')) || [];
+            
+            // Filter transactions for current user if user data exists
+            let userTransactions = [];
+            if (currentUser && currentUser.id) {
+                userTransactions = transactions.filter(transaction => transaction.userId === currentUser.id);
+            } else {
+                // Fallback: if no user data, show all transactions (for demo purposes)
+                userTransactions = transactions;
+            }
             
             // Calculate totals
             let totalIncome = 0;
@@ -548,18 +718,109 @@
             
             const balance = totalIncome - totalExpense;
             
-            // Update DOM elements
+            // Update dashboard cards
             document.getElementById('totalIncome').textContent = formatCurrency(totalIncome);
             document.getElementById('totalExpense').textContent = formatCurrency(totalExpense);
             document.getElementById('currentBalance').textContent = formatCurrency(balance);
             
             // Update balance color based on value
             const balanceElement = document.getElementById('currentBalance');
+            const balanceStatus = document.getElementById('balanceStatus');
+            
             if (balance < 0) {
                 balanceElement.style.color = '#e74c3c';
+                balanceStatus.textContent = 'Negative balance';
+                balanceStatus.className = 'card-change negative';
             } else {
                 balanceElement.style.color = '#4a6cf7';
+                balanceStatus.textContent = 'Positive balance';
+                balanceStatus.className = 'card-change positive';
             }
+            
+            // Display recent transactions (last 5)
+            displayRecentTransactions(userTransactions);
+        }
+        
+        // Function to display recent transactions
+        function displayRecentTransactions(transactions) {
+            const transactionsList = document.getElementById('transactionsList');
+            
+            // Clear existing content
+            transactionsList.innerHTML = '';
+            
+            if (transactions.length === 0) {
+                // Show message when no transactions
+                transactionsList.innerHTML = `
+                    <div class="no-transactions">
+                        <div class="no-transactions-icon">📊</div>
+                        <p>No transactions yet</p>
+                        <p style="font-size: 14px; margin-top: 10px;">Add your first income or expense to get started!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Sort transactions by date (newest first)
+            transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            // Get only the last 5 transactions
+            const recentTransactions = transactions.slice(0, 5);
+            
+            // Create transaction items
+            recentTransactions.forEach(transaction => {
+                const transactionItem = document.createElement('div');
+                transactionItem.className = 'transaction-item';
+                
+                // Get category icon based on transaction type and category
+                const categoryIcon = getCategoryIcon(transaction.category, transaction.type);
+                const amountClass = transaction.type === 'income' ? 'income' : 'expense';
+                const amountSign = transaction.type === 'income' ? '+' : '-';
+                
+                transactionItem.innerHTML = `
+                    <div class="transaction-info">
+                        <div class="transaction-icon" style="background: ${transaction.type === 'income' ? 'rgba(46, 204, 113, 0.2)' : 'rgba(231, 76, 60, 0.2)'};">
+                            <span style="color: ${transaction.type === 'income' ? '#2ecc71' : '#e74c3c'};">${categoryIcon}</span>
+                        </div>
+                        <div class="transaction-details">
+                            <h4>${transaction.category}</h4>
+                            <p>${formatDate(transaction.date)}</p>
+                            ${transaction.note ? `<p style="font-size: 12px; margin-top: 3px;">${transaction.note}</p>` : ''}
+                        </div>
+                    </div>
+                    <div class="transaction-amount ${amountClass}">${amountSign}${formatCurrency(transaction.amount)}</div>
+                `;
+                
+                transactionsList.appendChild(transactionItem);
+            });
+        }
+        
+        // Helper function to get category icon
+        function getCategoryIcon(category, type) {
+            const iconMap = {
+                'food': '🍕',
+                'transportation': '🚗',
+                'shopping': '🛍️',
+                'entertainment': '🎬',
+                'bills': '📄',
+                'healthcare': '⚕️',
+                'travel': '✈️',
+                'other': '📦',
+                'salary': '💰',
+                'freelance': '💼',
+                'business': '🏢',
+                'investment': '📈',
+                'rental': '🏠',
+                'bonus': '🎯',
+                'gifts': '🎁'
+            };
+            
+            // Default icons based on transaction type
+            const defaultIcons = {
+                'income': '💰',
+                'expense': '💸'
+            };
+            
+            return iconMap[category.toLowerCase()] || defaultIcons[type] || '💰';
         }
         
         // Helper function to format currency
@@ -569,6 +830,24 @@
                 currency: 'USD'
             }).format(amount);
         }
+        
+        // Helper function to format date
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+        
+        // Function to refresh dashboard data (can be called from other pages)
+        function refreshDashboard() {
+            loadDashboardData();
+        }
+        
+        // Listen for storage events to update dashboard when data changes in other tabs
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'expenseTrackerTransactions') {
+                loadDashboardData();
+            }
+        });
     </script>
 </body>
 </html>

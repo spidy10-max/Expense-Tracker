@@ -79,6 +79,7 @@
             width: 25px;
             height: 20px;
             justify-content: space-between;
+            z-index: 1001; /* Ensure hamburger is above menu */
         }
         
         .hamburger span {
@@ -88,6 +89,19 @@
             background-color: white;
             border-radius: 2px;
             transition: all 0.3s ease;
+        }
+        
+        /* Hamburger animation when active */
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(8.5px) rotate(45deg);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-8.5px) rotate(-45deg);
         }
         
         .nav {
@@ -113,6 +127,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            pointer-events: auto; /* Ensure links are clickable */
         }
         
         .nav-link i {
@@ -142,6 +157,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            pointer-events: auto; /* Ensure button is clickable */
         }
         
         .logout-btn:hover {
@@ -462,11 +478,13 @@
                 z-index: 999;
                 border-radius: 0 0 20px 20px;
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                pointer-events: none; /* Initially disable pointer events */
             }
             
             .nav-list.active {
                 transform: translateY(0);
                 opacity: 1;
+                pointer-events: auto; /* Enable pointer events when menu is active */
             }
             
             .nav-link {
@@ -637,35 +655,68 @@
     </footer>
 
     <script>
-        // Mobile navigation toggle
-        document.getElementById('hamburger').addEventListener('click', function() {
-            document.getElementById('navList').classList.toggle('active');
-            this.classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const navList = document.getElementById('navList');
+        // Mobile navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
             const hamburger = document.getElementById('hamburger');
+            const navList = document.getElementById('navList');
+            const logoutBtn = document.getElementById('logoutBtn');
             
-            if (!navList.contains(event.target) && !hamburger.contains(event.target)) {
+            // Function to close mobile menu
+            function closeMobileMenu() {
                 navList.classList.remove('active');
                 hamburger.classList.remove('active');
             }
-        });
-
-        // Logout functionality
-        document.getElementById('logoutBtn').addEventListener('click', function() {
-            if (confirm('Are you sure you want to logout?')) {
-                // Clear session storage
-                sessionStorage.removeItem('currentUser');
-                // Redirect to login page
-                window.location.href = 'login.html';
-            }
-        });
-
-        // Add animation to cards on page load
-        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Toggle mobile menu when hamburger is clicked
+            hamburger.addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent event from bubbling to document
+                navList.classList.toggle('active');
+                this.classList.toggle('active');
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                // Check if click is outside the menu and hamburger
+                if (!navList.contains(event.target) && !hamburger.contains(event.target)) {
+                    closeMobileMenu();
+                }
+            });
+            
+            // Close mobile menu when a nav-link is clicked
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Allow default navigation behavior
+                    // Close the menu after a short delay for better UX
+                    setTimeout(closeMobileMenu, 300);
+                });
+            });
+            
+            // Logout functionality
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault(); // Prevent any default behavior
+                
+                // Close the mobile menu
+                closeMobileMenu();
+                
+                // Show confirmation dialog
+                if (confirm('Are you sure you want to logout?')) {
+                    // Clear session storage
+                    sessionStorage.removeItem('currentUser');
+                    // Redirect to login page
+                    window.location.href = 'login.html';
+                }
+            });
+            
+            // Prevent menu from closing when clicking inside it
+            navList.addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent click from bubbling to document
+            });
+            
+            // Load dashboard data
+            loadDashboardData();
+            
+            // Add animation to cards on page load
             const cards = document.querySelectorAll('.card');
             cards.forEach((card, index) => {
                 card.style.opacity = '0';
@@ -677,9 +728,6 @@
                     card.style.transform = 'translateY(0)';
                 }, index * 150);
             });
-            
-            // Load user data and transactions
-            loadDashboardData();
         });
 
         // Function to load and display dashboard data

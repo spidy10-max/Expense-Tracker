@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker - History</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="nav-wrapper">
+            <div class="logo">
+                <h1>EXPENSE TRACKER</h1>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li><a href="add-expense.html" class="nav-link">Add Expense</a></li>
+                    <li><a href="add-income.html" class="nav-link">Add Income</a></li>
+                    <li><a href="history.html" class="nav-link active">History</a></li>
+                    <li><a href="#" class="nav-link">Profile</a></li>
+                </ul>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <h2 style="font-size: 36px; font-weight: 700; margin-bottom: 10px; text-align: center;">Transaction History</h2>
+        <p style="text-align: center; color: rgba(255,255,255,0.8); margin-bottom: 30px;">View and manage your income and expense history</p>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="filter-group">
+                <label for="filterType">Type</label>
+                <select id="filterType" class="form-control">
+                    <option value="">All</option>
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filterCategory">Category</label>
+                <select id="filterCategory" class="form-control">
+                    <option value="">All</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filterDateFrom">From Date</label>
+                <input type="date" id="filterDateFrom" class="form-control">
+            </div>
+            <div class="filter-group">
+                <label for="filterDateTo">To Date</label>
+                <input type="date" id="filterDateTo" class="form-control">
+            </div>
+        </div>
+
+        <!-- Transactions Table -->
+        <div class="table-container">
+            <table id="transactionsTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Category</th>
+                        <th>Note</th>
+                        <th>Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Transactions will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
